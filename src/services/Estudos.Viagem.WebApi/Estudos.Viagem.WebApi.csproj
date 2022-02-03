@@ -21,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Estudos.Viagem.Infrastructure.RabbitMq\Estudos.Viagem.Infrastructure.RabbitMq.csproj" />
+    <ProjectReference Include="..\Estudos.Viagem.Application\Estudos.Viagem.Application.csproj" />
+    <ProjectReference Include="..\Estudos.Viagem.Infrastructure.RabbitMq\Estudos.Viagem.Infrastructure.RabbitMq.csproj" />
   </ItemGroup>
 
 </Project>
