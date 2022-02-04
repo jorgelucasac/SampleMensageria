@@ -13,7 +13,7 @@ public class CriarViagem : ICriarViagemUseCase
 
     public async Task<CriarViagemOutput> Handle(CriarViagemInput request, CancellationToken cancellationToken)
     {
-        await _eventService.Publish(request.ToEvent());
+        await _eventService.PublishAsync(request.ToEvent());
 
         return OutputSucesso();
     }

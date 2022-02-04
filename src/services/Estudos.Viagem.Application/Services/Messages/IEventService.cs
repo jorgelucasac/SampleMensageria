@@ -4,5 +4,5 @@ namespace Estudos.Viagem.Application.Services.Messages;
 
 public interface IEventService
 {
-    Task Publish(Event @event);
+    Task PublishAsync<T>(T @event) where T : Event;
 }

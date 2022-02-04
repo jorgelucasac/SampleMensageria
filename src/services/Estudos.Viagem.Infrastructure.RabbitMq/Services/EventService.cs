@@ -13,7 +13,7 @@ public class EventService : IEventService
         _publishEndpoint = publishEndpoint;
     }
 
-    public async Task Publish(Event @event)
+    public async Task PublishAsync<T>(T @event) where T : Event
     {
         await _publishEndpoint.Publish(@event);
     }
