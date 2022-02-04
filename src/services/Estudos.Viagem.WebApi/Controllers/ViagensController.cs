@@ -16,9 +16,9 @@ public class ViagensController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostAsync(CriarViagemTransport input)
+    public async Task<IActionResult> PostAsync(CriarViagemRequest input, CancellationToken cancellationToken)
     {
-        var output = await _mediator.Send(input.ToViagemInput());
+        var output = await _mediator.Send(input.ToViagemInput(), cancellationToken);
         if (output.Sucesso)
             return Ok(output);
 

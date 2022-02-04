@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "building blocks", "building blocks", "{345378C0-BDFF-41F4-BA74-5462FC01331F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.Viagem.Messages", "src\building blocks\Estudos.Viagem.Messages\Estudos.Viagem.Messages.csproj", "{26F01C4D-ABC1-4E1E-974B-EBB48BF74D7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estudos.Viagem.Messages", "src\building blocks\Estudos.Viagem.Messages\Estudos.Viagem.Messages.csproj", "{26F01C4D-ABC1-4E1E-974B-EBB48BF74D7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A76DBAD8-657E-4EF1-956C-4CF8F67AF903}"
 EndProject
@@ -17,11 +17,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Application", "2.Applicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructure", "3.Infrastructure", "{4674C574-43FB-456B-AC42-FEEC765E1B82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.Viagem.WebApi", "src\services\Estudos.Viagem.WebApi\Estudos.Viagem.WebApi.csproj", "{9FECEB5B-63E4-44A3-940B-ACC3CC9ED29D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estudos.Viagem.WebApi", "src\services\Estudos.Viagem.WebApi\Estudos.Viagem.WebApi.csproj", "{9FECEB5B-63E4-44A3-940B-ACC3CC9ED29D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.Viagem.Application", "src\services\Estudos.Viagem.Application\Estudos.Viagem.Application.csproj", "{F7A9C985-BA37-40CE-A5AD-F9ABD3F503C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estudos.Viagem.Application", "src\services\Estudos.Viagem.Application\Estudos.Viagem.Application.csproj", "{F7A9C985-BA37-40CE-A5AD-F9ABD3F503C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estudos.Viagem.Infrastructure.RabbitMq", "src\services\Estudos.Viagem.Infrastructure.RabbitMq\Estudos.Viagem.Infrastructure.RabbitMq.csproj", "{32840E55-AFA9-416A-967D-10D204D5DA1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotel", "Hotel", "{66706BC2-D452-4196-90F0-2F9B1215C72E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Presentation", "1.Presentation", "{F5A7CD29-6717-417D-BE56-B218122E137E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Application", "2.Application", "{AE21F40B-CC17-4074-95EF-57C37DC58489}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructure", "3.Infrastructure", "{76A66C3E-58D0-4AA0-A798-043F2ED43312}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.Hotelaria.Consumer", "Estudos.Hotelaria.Consumer\Estudos.Hotelaria.Consumer.csproj", "{848588B4-FCF4-45D7-80E5-3256D35D9C98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +55,10 @@ Global
 		{32840E55-AFA9-416A-967D-10D204D5DA1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32840E55-AFA9-416A-967D-10D204D5DA1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32840E55-AFA9-416A-967D-10D204D5DA1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{848588B4-FCF4-45D7-80E5-3256D35D9C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{848588B4-FCF4-45D7-80E5-3256D35D9C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{848588B4-FCF4-45D7-80E5-3256D35D9C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{848588B4-FCF4-45D7-80E5-3256D35D9C98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +72,11 @@ Global
 		{9FECEB5B-63E4-44A3-940B-ACC3CC9ED29D} = {239191CE-48ED-49EF-AAAC-079C976E9A5B}
 		{F7A9C985-BA37-40CE-A5AD-F9ABD3F503C9} = {DEB37A75-A81E-4462-BD1A-0A23F9157EBD}
 		{32840E55-AFA9-416A-967D-10D204D5DA1C} = {4674C574-43FB-456B-AC42-FEEC765E1B82}
+		{66706BC2-D452-4196-90F0-2F9B1215C72E} = {A76DBAD8-657E-4EF1-956C-4CF8F67AF903}
+		{F5A7CD29-6717-417D-BE56-B218122E137E} = {66706BC2-D452-4196-90F0-2F9B1215C72E}
+		{AE21F40B-CC17-4074-95EF-57C37DC58489} = {66706BC2-D452-4196-90F0-2F9B1215C72E}
+		{76A66C3E-58D0-4AA0-A798-043F2ED43312} = {66706BC2-D452-4196-90F0-2F9B1215C72E}
+		{848588B4-FCF4-45D7-80E5-3256D35D9C98} = {F5A7CD29-6717-417D-BE56-B218122E137E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D26CC7DD-55A0-4418-BFBB-ED5EBA8BEF8A}
