@@ -1,13 +1,7 @@
-﻿using MassTransit;
-using MassTransit.Definition;
+﻿using Estudos.Hotelaria.Consumer.Extensions;
+using Estudos.Hotelaria.Infrastructure.RabbitMq.Extensions;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Serilog;
-using Serilog.Events;
-using System.Reflection;
 
 namespace Estudos.Hotelaria.Consumer;
 
@@ -20,13 +14,6 @@ public class Program
 
     public static IHostBuilder CreateHostBuilder(string[]? args)
     {
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .CreateLogger();
-
         return Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
@@ -38,27 +25,12 @@ public class Program
             })
             .ConfigureLogging((hostingContext, logging) =>
             {
-                logging.AddSerilog(dispose: true);
-                logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                logging.AddSerilog(hostingContext.Configuration);
             })
             .ConfigureServices((hostContext, services) =>
             {
-                services.AddMassTransit(x =>
-                {
-                    services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-
-                    var entryAssembly = Assembly.GetEntryAssembly();
-                    x.AddConsumers(entryAssembly);
-
-                    x.UsingRabbitMq((context, cfg) =>
-                    {
-                        cfg.Host(hostContext.Configuration.GetConnectionString("RabbitMq"));
-                        cfg.ConfigureEndpoints(context);
-                        cfg.PrefetchCount = 1;
-                    });
-                });
-                services.AddMassTransitHostedService(true);
-                services.AddHostedService<Worker>();
+                services.AddRabbitMq(hostContext.Configuration);
+                services.AddWorker();
             });
     }
 }
