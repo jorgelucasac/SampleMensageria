@@ -33,9 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\Estudos.Viagem.Messages\Estudos.Viagem.Messages.csproj" />
     <ProjectReference Include="..\Estudos.Hotelaria.Application\Estudos.Hotelaria.Application.csproj" />
     <ProjectReference Include="..\Estudos.Hotelaria.Infrastructure.RabbitMq\Estudos.Hotelaria.Infrastructure.RabbitMq.csproj" />
-    <ProjectReference Include="..\src\building blocks\Estudos.Viagem.Messages\Estudos.Viagem.Messages.csproj" />
   </ItemGroup>
 
 </Project>

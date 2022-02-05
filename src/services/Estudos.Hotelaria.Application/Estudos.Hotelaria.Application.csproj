@@ -12,6 +12,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\src\building blocks\Estudos.Viagem.Messages\Estudos.Viagem.Messages.csproj" />
+	  <ProjectReference Include="..\..\building blocks\Estudos.Viagem.Messages\Estudos.Viagem.Messages.csproj" />
 	</ItemGroup>
 </Project>

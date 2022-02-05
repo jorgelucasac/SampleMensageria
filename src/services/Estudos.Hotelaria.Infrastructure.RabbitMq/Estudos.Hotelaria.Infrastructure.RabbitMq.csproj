@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\building blocks\Estudos.Viagem.Messages\Estudos.Viagem.Messages.csproj" />
 	  <ProjectReference Include="..\Estudos.Hotelaria.Application\Estudos.Hotelaria.Application.csproj" />
 	</ItemGroup>
 

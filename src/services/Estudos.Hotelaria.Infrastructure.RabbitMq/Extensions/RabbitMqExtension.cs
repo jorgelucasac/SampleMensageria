@@ -15,11 +15,14 @@ namespace Estudos.Hotelaria.Infrastructure.RabbitMq.Extensions
 
                 x.AddConsumers(typeof(HotelConsumer).Assembly);
 
+                x.AddDelayedMessageScheduler();
+
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host(configuration.GetConnectionString("RabbitMq"));
                     cfg.ConfigureEndpoints(context);
                     cfg.PrefetchCount = 1;
+                    cfg.UseDelayedMessageScheduler();
                 });
             });
             services.AddMassTransitHostedService(true);
