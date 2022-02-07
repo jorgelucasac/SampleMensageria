@@ -30,7 +30,6 @@ public class Program
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddRabbitMq(hostContext.Configuration);
-                services.AddWorker();
             });
     }
 }

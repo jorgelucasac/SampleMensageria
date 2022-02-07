@@ -20,7 +20,7 @@ public class HotelConsumer : IConsumer<ViagemCriadaEvent>
     {
         //await Task.Delay(TimeSpan.FromSeconds(2));
         _logger.LogInformation($"\nmsg recebida: tipo: {context.Message.MessageType}, id: {context.Message.CorrelationalId}\n");
-        throw new Exception("asdasdsa");
+        //throw new Exception("asdasdsa");
     }
 }
 
