@@ -1,29 +1,9 @@
-﻿using Estudos.Viagem.Messages.Events;
-using GreenPipes;
+﻿using GreenPipes;
 using MassTransit;
 using MassTransit.ConsumeConfigurators;
 using MassTransit.Definition;
-using Microsoft.Extensions.Logging;
 
-namespace Estudos.Hotelaria.Application.Consumers;
-
-public class HotelConsumer : IConsumer<ViagemCriadaEvent>
-{
-    private readonly ILogger<HotelConsumer> _logger;
-
-    public HotelConsumer(ILogger<HotelConsumer> logger)
-    {
-        _logger = logger;
-    }
-
-    public async Task Consume(ConsumeContext<ViagemCriadaEvent> context)
-    {
-        //await Task.Delay(TimeSpan.FromSeconds(2));
-        _logger.LogInformation($"\nmsg recebida: tipo: {context.Message.MessageType}, id: {context.Message.CorrelationalId}\n");
-        //throw new Exception("asdasdsa");
-    }
-}
-
+namespace Estudos.Hotelaria.Consumer.Consumers;
 
 public class HotelConsumerDefinition : ConsumerDefinition<HotelConsumer>
 {
@@ -45,8 +25,7 @@ public class HotelConsumerDefinition : ConsumerDefinition<HotelConsumer>
                 TimeSpan.FromSeconds(5)
             );
         });
-        
-        //TODO: Revisitar método que não está funcionando adequadamente
+
         consumerConfigurator.UseDelayedRedelivery(r =>
         {
             r.Intervals(

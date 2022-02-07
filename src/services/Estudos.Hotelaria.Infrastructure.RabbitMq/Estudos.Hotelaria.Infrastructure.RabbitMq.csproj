@@ -16,4 +16,8 @@
 	  <ProjectReference Include="..\Estudos.Hotelaria.Application\Estudos.Hotelaria.Application.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Extensions\" />
+	</ItemGroup>
+
 </Project>

@@ -1,5 +1,4 @@
 ﻿using Estudos.Hotelaria.Consumer.Extensions;
-using Estudos.Hotelaria.Infrastructure.RabbitMq.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 

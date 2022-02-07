@@ -1,9 +1,9 @@
-﻿using Estudos.Hotelaria.Application.Consumers;
+﻿using Estudos.Hotelaria.Consumer.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Estudos.Hotelaria.Infrastructure.RabbitMq.Extensions
+namespace Estudos.Hotelaria.Consumer.Extensions
 {
     public static class RabbitMqExtension
     {
