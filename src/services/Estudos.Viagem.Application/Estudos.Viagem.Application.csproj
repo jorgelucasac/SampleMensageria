@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="Services\Messages\" />
     <Folder Include="UseCase\CriarViagem\" />
   </ItemGroup>
