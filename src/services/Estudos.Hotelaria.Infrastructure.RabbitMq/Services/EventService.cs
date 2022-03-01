@@ -1,8 +1,8 @@
-﻿using Estudos.Viagem.Application.Services.Messages;
-using Estudos.Viagem.Messages.Events;
+﻿using Estudos.Viagem.Messages.Services;
 using MassTransit;
+using Event = Estudos.Viagem.Messages.Events.Event;
 
-namespace Estudos.Viagem.Infrastructure.RabbitMq.Services;
+namespace Estudos.Hotelaria.Infrastructure.RabbitMq.Services;
 
 public class EventService : IEventService
 {

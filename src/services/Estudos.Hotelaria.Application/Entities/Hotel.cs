@@ -1,8 +1,11 @@
-﻿namespace Estudos.Hotelaria.Application.Entities
+﻿using FluentValidation;
+using FluentValidation.Results;
+
+namespace Estudos.Hotelaria.Application.Entities
 {
     public class Hotel : BaseEntity
     {
-        public Hotel(string nome, string cidade, TipoAcomodacao tipoAcomodacao, decimal valorDiaria, int quantidadeQuartos)
+        public Hotel(string nome, string cidade, TipoAcomodacao tipoAcomodacao, decimal valorDiaria, int quantidadeQuartos, int quantidadeQuartosOcupados = 0)
         {
             Nome = nome;
             Cidade = cidade;
@@ -10,6 +13,7 @@
             ValorDiaria = valorDiaria;
             QuantidadeQuartos = quantidadeQuartos;
             DataCadastro = DateTime.Now;
+            QuantidadeQuartosOcupados = quantidadeQuartosOcupados;
         }
 
         public string Nome { get; private set; }
@@ -26,14 +30,46 @@
 
         public DateTime DataCadastro { get; private set; }
 
-        public void AdicionarReserva(int quantidadeQuartos)
+        public bool AdicionarReserva(int qtdReservas = 0)
         {
-            QuantidadeQuartosOcupados += quantidadeQuartos;
+            if (qtdReservas == 0)
+                QuantidadeQuartosOcupados++;
+
+            else
+                QuantidadeQuartosOcupados += qtdReservas;
+
+            return Validate().IsValid;
         }
 
-        public void RemoverReserva(int quantidadeQuartos)
+        public bool RemoverReserva(int qtdReservas = 0)
         {
-            QuantidadeQuartosOcupados -= quantidadeQuartos;
+            if (qtdReservas == 0)
+                QuantidadeQuartosOcupados--;
+
+            else
+                QuantidadeQuartosOcupados -= qtdReservas;
+
+            return Validate().IsValid;
+        }
+
+        public ValidationResult Validate()
+        {
+            var validation = new HotelValidation().Validate(this);
+            return validation;
+        }
+
+        public class HotelValidation : AbstractValidator<Hotel>
+        {
+            public HotelValidation()
+            {
+                RuleFor(x => x.QuantidadeQuartos)
+                    .GreaterThan(0)
+                    .WithMessage("A quantidade de quartos deve ser mair que zero");
+
+                RuleFor(x => x.QuantidadeQuartosOcupados)
+                  .LessThanOrEqualTo(x => x.QuantidadeQuartos)
+                  .WithMessage("Quantidade de quartos insuficientes para realizar a reserva");
+            }
         }
     }
 

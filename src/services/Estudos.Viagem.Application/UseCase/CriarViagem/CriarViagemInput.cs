@@ -35,11 +35,17 @@ public class CriarViagemInput : IRequest<CriarViagemOutput>
     public Guid? HospedagemId { get; set; }
     public Guid? CarroId { get; set; }
 
-    internal ViagemCriadaEvent ToEvent()
+    internal ViagemCriadaEvent ToEvent(Guid idViagem)
     {
         return new ViagemCriadaEvent
         {
-            CorrelationalId = ClienteId
+            CorrelationalId = idViagem,
+            Destino = Destino,
+            DataIda = DataIda.ToDateTime(TimeOnly.MinValue),
+            DataVolta = DataVolta.ToDateTime(TimeOnly.MinValue),
+            QuantidadeViajantes = QuantidadeViajantes,
+            HospedagemId = HospedagemId ?? Guid.Empty,
+            ViagemId = idViagem
         };
     }
 

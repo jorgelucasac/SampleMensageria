@@ -1,4 +1,5 @@
 ﻿using Estudos.Hotelaria.Consumer.Extensions;
+using Estudos.Hotelaria.Infrastructure.MongoDb;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -29,6 +30,7 @@ public class Program
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddRabbitMq(hostContext.Configuration);
+                services.UseMongoDb(hostContext.Configuration);
             });
     }
 }

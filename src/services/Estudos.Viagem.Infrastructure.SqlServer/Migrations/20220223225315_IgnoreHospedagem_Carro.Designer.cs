@@ -4,6 +4,7 @@ using Estudos.Viagem.Infrastructure.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Estudos.Viagem.Infrastructure.SqlServer.Migrations
 {
     [DbContext(typeof(ViagemDataContext))]
-    partial class ViagemDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220223225315_IgnoreHospedagem_Carro")]
+    partial class IgnoreHospedagem_Carro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,9 +115,6 @@ namespace Estudos.Viagem.Infrastructure.SqlServer.Migrations
 
                     b.Property<Guid?>("HospedagemId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("MensagensValidacoes")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

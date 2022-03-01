@@ -19,9 +19,8 @@ namespace Estudos.Viagem.Infrastructure.SqlServer.Repositories
             {
                 return await _context.Viagens
                     .Include(x => x.Cliente)
-                    .Include(x => x.Hospedagem)
-                    .Include(x => x.Carro)
                     .AsNoTracking()
+                    .OrderByDescending(x => x.DataUltimaAtualizacao)
                     .ToListAsync();
             }
             catch (Exception ex)

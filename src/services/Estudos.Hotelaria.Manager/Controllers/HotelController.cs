@@ -35,7 +35,8 @@ namespace Estudos.Hotelaria.Manager.Controllers
                     Cidade = hotel.Cidade,
                     TipoAcomodacao = hotel.TipoAcomodacao,
                     ValorDiaria = hotel.ValorDiaria,
-                    QuantidadeQuartos = hotel.QuantidadeQuartos
+                    QuantidadeQuartos = hotel.QuantidadeQuartos,
+                    QuantidadeQuartosOcupados = hotel.QuantidadeQuartosOcupados
                 };
                 return View(hotelViewModel);
             }
@@ -48,22 +49,27 @@ namespace Estudos.Hotelaria.Manager.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!hotelViewModel.Validate().IsValid)
                 {
-                    var hotel = new Hotel(
-                         hotelViewModel.Nome,
-                         hotelViewModel.Cidade,
-                         hotelViewModel.TipoAcomodacao,
-                         hotelViewModel.ValorDiaria,
-                         hotelViewModel.QuantidadeQuartos
-                     );
+                    foreach (var erro in hotelViewModel.Validate().Errors)
+                        ModelState.AddModelError(erro.PropertyName, erro.ErrorMessage);
 
-                    if (hotelViewModel.Id != Guid.Empty)
-                        hotel.Id = hotelViewModel.Id;
-
-                    await _hotelRepository.Save(hotel);
+                    return View("Create", hotelViewModel);
                 }
 
+                var hotel = new Hotel(
+                     hotelViewModel.Nome,
+                     hotelViewModel.Cidade,
+                     hotelViewModel.TipoAcomodacao,
+                     hotelViewModel.ValorDiaria,
+                     hotelViewModel.QuantidadeQuartos,
+                     hotelViewModel.QuantidadeQuartosOcupados
+                 );
+
+                if (hotelViewModel.Id != Guid.Empty)
+                    hotel.Id = hotelViewModel.Id;
+
+                await _hotelRepository.Save(hotel);
                 return RedirectToAction(nameof(Index));
             }
             catch

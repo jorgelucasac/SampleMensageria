@@ -39,9 +39,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estudos.Hotelaria.Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estudos.Viagem.Infrastructure.SqlServer", "src\services\Estudos.Viagem.Infrastructure.SqlServer\Estudos.Viagem.Infrastructure.SqlServer.csproj", "{00B3633C-8015-4935-973B-04532B0111AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.Hotelaria.Manager", "src\services\Estudos.Hotelaria.Manager\Estudos.Hotelaria.Manager.csproj", "{8ED0B04C-426D-4E8F-9E49-FE468F1EF842}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estudos.Hotelaria.Manager", "src\services\Estudos.Hotelaria.Manager\Estudos.Hotelaria.Manager.csproj", "{8ED0B04C-426D-4E8F-9E49-FE468F1EF842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.Hotelaria.Infrastructure.MongoDb", "src\services\Estudos.Hotelaria.Infrastructure.MongoDb\Estudos.Hotelaria.Infrastructure.MongoDb.csproj", "{A3DB237D-D280-4A4C-B231-328FDE047DE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estudos.Hotelaria.Infrastructure.MongoDb", "src\services\Estudos.Hotelaria.Infrastructure.MongoDb\Estudos.Hotelaria.Infrastructure.MongoDb.csproj", "{A3DB237D-D280-4A4C-B231-328FDE047DE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.Viagem.Core", "src\building blocks\Estudos.Viagem.Core\Estudos.Viagem.Core.csproj", "{573321A3-A41F-49DC-852F-C3B08B03B291}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,10 @@ Global
 		{A3DB237D-D280-4A4C-B231-328FDE047DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3DB237D-D280-4A4C-B231-328FDE047DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3DB237D-D280-4A4C-B231-328FDE047DE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{573321A3-A41F-49DC-852F-C3B08B03B291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{573321A3-A41F-49DC-852F-C3B08B03B291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{573321A3-A41F-49DC-852F-C3B08B03B291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{573321A3-A41F-49DC-852F-C3B08B03B291}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{00B3633C-8015-4935-973B-04532B0111AC} = {431974C0-A40F-4E5F-A009-58A1374E3287}
 		{8ED0B04C-426D-4E8F-9E49-FE468F1EF842} = {2BCC9FD6-FE4B-4BDF-B999-85637439E8A8}
 		{A3DB237D-D280-4A4C-B231-328FDE047DE4} = {7AB013E2-49CF-4D23-939E-F31BA1C8B872}
+		{573321A3-A41F-49DC-852F-C3B08B03B291} = {345378C0-BDFF-41F4-BA74-5462FC01331F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D26CC7DD-55A0-4418-BFBB-ED5EBA8BEF8A}

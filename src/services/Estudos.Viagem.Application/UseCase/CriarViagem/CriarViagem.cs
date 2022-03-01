@@ -18,19 +18,19 @@ public class CriarViagem : ICriarViagemUseCase
 
     public async Task<CriarViagemOutput> Handle(CriarViagemInput request, CancellationToken cancellationToken)
     {
-
-        if (request.HospedagemId != null)
-            await _eventService.PublishAsync(request.ToEvent());
-
-        //TODO: Tratar quando houver o serviço de carro
-        //if (request.CarroId != null)
-        //await _eventService.PublishAsync(request.ToEvent());
-
         var cliente = await _clienteRepository.GetById(request.ClienteId);
         if (cliente == null)
             return OutputFalha("Cliente não encontrado");
 
-        await _viagemRepository.Save(request.ToViagem());
+        var viagem = request.ToViagem();
+        await _viagemRepository.Save(viagem);
+
+        if (request.HospedagemId != null && request.HospedagemId != Guid.Empty)
+            await _eventService.PublishAsync(request.ToEvent(viagem.Id));
+
+        //TODO: Tratar quando houver o serviço de carro
+        //if (request.CarroId != null)
+        //await _eventService.PublishAsync(request.ToEvent());
         return OutputSucesso();
     }
 

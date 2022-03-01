@@ -19,6 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\building blocks\Estudos.Viagem.Core\Estudos.Viagem.Core.csproj" />
 		<ProjectReference Include="..\Estudos.Viagem.Application\Estudos.Viagem.Application.csproj" />
 		<ProjectReference Include="..\Estudos.Viagem.Infrastructure.RabbitMq\Estudos.Viagem.Infrastructure.RabbitMq.csproj" />
 		<ProjectReference Include="..\Estudos.Viagem.Infrastructure.SqlServer\Estudos.Viagem.Infrastructure.SqlServer.csproj" />

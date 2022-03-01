@@ -1,4 +1,6 @@
 ﻿using Estudos.Hotelaria.Consumer.Consumers;
+using Estudos.Hotelaria.Infrastructure.RabbitMq.Services;
+using Estudos.Viagem.Messages.Services;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,8 @@ namespace Estudos.Hotelaria.Consumer.Extensions
                 });
             });
             services.AddMassTransitHostedService(true);
+
+            services.AddScoped<IEventService, EventService>();
             return services;
         }
     }

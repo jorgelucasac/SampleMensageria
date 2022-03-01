@@ -1,4 +1,6 @@
 ﻿using Estudos.Viagem.Application.ValueObjects;
+using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace Estudos.Viagem.Application.Entities
 {
@@ -12,7 +14,7 @@ namespace Estudos.Viagem.Application.Entities
             ClienteId = clienteId;
             HospedagemId = hospedagemId;
             CarroId = carroId;
-            Status = StatusViagem.Agendada;
+            Status = StatusViagem.EmAnalise;
             DataCadastro = DateTime.Now;
             DataUltimaAtualizacao = DateTime.Now;
             CalcularValorViagem();
@@ -26,6 +28,7 @@ namespace Estudos.Viagem.Application.Entities
         public StatusViagem Status { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public DateTime DataUltimaAtualizacao { get; private set; }
+        public string? MensagensValidacoes { get; private set; }
 
         public virtual Hospedagem Hospedagem { get; set; }
         public virtual Cliente Cliente { get; set; }
@@ -34,6 +37,18 @@ namespace Estudos.Viagem.Application.Entities
         public void AgendarViagem()
         {
             Status = StatusViagem.Agendada;
+            DataUltimaAtualizacao = DateTime.Now;
+        }
+
+        public void ConfirmarReservaHotel()
+        {
+            Status = StatusViagem.HotelReservado;
+            DataUltimaAtualizacao = DateTime.Now;
+        }
+
+        public void ConfirmarReservaCarro()
+        {
+            Status = StatusViagem.CarroReservado;
             DataUltimaAtualizacao = DateTime.Now;
         }
 
@@ -53,24 +68,43 @@ namespace Estudos.Viagem.Application.Entities
         {
             if (Passagem == null) return;
 
+            var diarias = GetQuantidadeDiarias();
+            Total = (diarias <= 0 ? 1 : diarias) * 500 * Passagem.QuantidadeViajantes;
+        }
+
+        public void AtualizarValorComHotel(decimal valorDiaria)
+        {
+            var diarias = GetQuantidadeDiarias();
+            Total += (diarias <= 0 ? 1 : diarias) * valorDiaria;
+        }
+
+        private int GetQuantidadeDiarias()
+        {
             var dataIda = Passagem.DataIda.ToDateTime(TimeOnly.Parse("00:00"));
             var dataVolta = Passagem.DataVolta.ToDateTime(TimeOnly.Parse("00:00"));
             var diarias = (dataVolta - dataIda).Days;
-            Total = (diarias <= 0 ? 1 : diarias) * 500 * Passagem.QuantidadeViajantes;
-
-            if (Hospedagem != null && Hospedagem.PrecoDiaria > 0)
-                Total += Hospedagem.PrecoDiaria * diarias;
-
-            if (Carro != null && Carro.PrecoDiaria > 0)
-                Total += Carro.PrecoDiaria * diarias;
+            return diarias;
         }
 
-        //TODO: Validar dados
-    }
-    public enum StatusViagem
-    {
-        Agendada = 1,
-        Realizada = 2,
-        Cancelada = 3
+        public void AddMensagensValidacoes(IList<string> mensagens)
+        {
+            var msg = JsonConvert.SerializeObject(mensagens);
+            MensagensValidacoes = msg;
+        }
+
+        //TODO: Criar validações
+
+        public enum StatusViagem
+        {
+            [Description("Em análise")]
+            EmAnalise = 1,
+            Agendada = 2,
+            [Description("Hotel Reservado")]
+            HotelReservado = 3,
+            [Description("Carro Reservado")]
+            CarroReservado = 4,
+            Realizada = 5,
+            Cancelada = 6
+        }
     }
 }

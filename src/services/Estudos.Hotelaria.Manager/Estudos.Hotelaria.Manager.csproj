@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Estudos.Hotelaria.Application\Estudos.Hotelaria.Application.csproj" />
     <ProjectReference Include="..\Estudos.Hotelaria.Infrastructure.MongoDb\Estudos.Hotelaria.Infrastructure.MongoDb.csproj" />
   </ItemGroup>
 

@@ -83,6 +83,9 @@ namespace Estudos.Viagem.Infrastructure.SqlServer
         {
             builder.HasKey(x => x.Id);
 
+            builder.Ignore(x => x.Hospedagem);
+            builder.Ignore(x => x.Carro);
+
             builder.OwnsOne(p => p.Passagem, e =>
             {
                 e.Property(ps => ps.Origem)
