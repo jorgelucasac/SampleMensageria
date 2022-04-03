@@ -1,5 +1,5 @@
-﻿using Estudos.Viagem.Application.Services.Messages;
-using Estudos.Viagem.Messages.Events;
+﻿using Estudos.Viagem.Messages.Events;
+using Estudos.Viagem.Messages.Services;
 using MassTransit;
 
 namespace Estudos.Viagem.Infrastructure.RabbitMq.Services;

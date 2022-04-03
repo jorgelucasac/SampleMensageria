@@ -6,6 +6,6 @@ public class ViagemCriadaEvent : Event
     public DateTime DataIda { get; set; }
     public DateTime DataVolta { get; set; }
     public int QuantidadeViajantes { get; set; }
-    public Guid HospedagemId { get; set; }
-    public Guid ViagemId { get; set; }
+    public Guid? HospedagemId { get; set; }
+    public Guid? CarroId { get; set; }
 }

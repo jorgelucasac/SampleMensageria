@@ -1,54 +1,36 @@
-﻿using Estudos.Viagem.Application.Repositories;
+﻿using Estudos.Viagem.Application.UseCase.AtualizarViagemComHotel;
 using Estudos.Viagem.Messages.Events;
 using MassTransit;
+using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Estudos.Viagem.Application.Consumers
 {
     public class AtualizarHotelViagemSucessoConsumer : IConsumer<HotelReservadoEvent>
     {
-        private readonly IViagemRepository _viagemRepository;
+        private readonly ILogger<AtualizarHotelViagemSucessoConsumer> _logger;
+        private readonly IMediator _mediator;
 
-        public AtualizarHotelViagemSucessoConsumer(IViagemRepository viagemRepository)
+        public AtualizarHotelViagemSucessoConsumer(ILogger<AtualizarHotelViagemSucessoConsumer> logger, IMediator mediator)
         {
-            _viagemRepository = viagemRepository;
+            _logger = logger;
+            _mediator = mediator;
         }
 
         public async Task Consume(ConsumeContext<HotelReservadoEvent> context)
         {
-            var viagem = await _viagemRepository.GetById(context.Message.ViagemId);
-            if (viagem == null) return;
+            var request = new AtualizarViagemComHotelInput(
+                context.Message.ViagemId,
+                context.Message.HotelId,
+                context.Message.NomeHotel,
+                context.Message.ValorDiaria
+            );
 
-            viagem.AtualizarValorComHotel(context.Message.ValorDiaria);
-            viagem.ConfirmarReservaHotel();
-            await _viagemRepository.Update(viagem);
-            //TODO: Inserir dados do hotel no banco
-        }
-    }
-
-    public class AtualizarHotelViagemFalhaConsumer : IConsumer<HotelReservaFalhou>
-    {
-        private readonly IViagemRepository _viagemRepository;
-
-        public AtualizarHotelViagemFalhaConsumer(IViagemRepository viagemRepository)
-        {
-            _viagemRepository = viagemRepository;
-        }
-
-        public async Task Consume(ConsumeContext<HotelReservaFalhou> context)
-        {
-            var viagem = await _viagemRepository.GetById(context.Message.ViagemId);
-            if (viagem == null) return;
-
-            if (context.Message.Excessao)
-            {
-                viagem.CancelarViagem();
-                viagem.AddMensagensValidacoes(context.Message.Mensagens);
-                await _viagemRepository.Update(viagem);
-                return;
-            }
-
-            viagem.AddMensagensValidacoes(context.Message.Mensagens);
-            await _viagemRepository.Update(viagem);
+            var output = await _mediator.Send(request);
+            if (output.Success)
+                _logger.LogInformation(output.Message);
+            else
+                _logger.LogError(output.Message, output.Errors);
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Estudos.Viagem.Application.Entities;
-using Estudos.Viagem.Application.ValueObjects;
+﻿using Estudos.Viagem.Domain.Entities;
+using Estudos.Viagem.Domain.ValueObjects;
 using Estudos.Viagem.Messages.Events;
+using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 
 namespace Estudos.Viagem.Application.UseCase.CriarViagem;
@@ -35,6 +37,8 @@ public class CriarViagemInput : IRequest<CriarViagemOutput>
     public Guid? HospedagemId { get; set; }
     public Guid? CarroId { get; set; }
 
+    internal ValidationResult Validate() => new CriarViagemInputValidation().Validate(this);
+
     internal ViagemCriadaEvent ToEvent(Guid idViagem)
     {
         return new ViagemCriadaEvent
@@ -44,8 +48,8 @@ public class CriarViagemInput : IRequest<CriarViagemOutput>
             DataIda = DataIda.ToDateTime(TimeOnly.MinValue),
             DataVolta = DataVolta.ToDateTime(TimeOnly.MinValue),
             QuantidadeViajantes = QuantidadeViajantes,
-            HospedagemId = HospedagemId ?? Guid.Empty,
-            ViagemId = idViagem
+            HospedagemId = HospedagemId,
+            CarroId = CarroId
         };
     }
 
@@ -58,6 +62,38 @@ public class CriarViagemInput : IRequest<CriarViagemOutput>
             DataVolta,
             QuantidadeViajantes
         );
-        return new PacoteViagem(passagem, ClienteId, HospedagemId, CarroId);
+        return new PacoteViagem(passagem, ClienteId);
+    }
+
+    internal class CriarViagemInputValidation : AbstractValidator<CriarViagemInput>
+    {
+        public CriarViagemInputValidation()
+        {
+            RuleFor(x => x.Origem)
+                .NotEmpty()
+                .WithMessage("Preenchimento obrigatório");
+
+            RuleFor(x => x.Destino)
+                .NotEmpty()
+                .WithMessage("Preenchimento obrigatório");
+
+            RuleFor(x => x.DataIda)
+                .NotEmpty()
+                .WithMessage("Preenchimento obrigatório");
+
+            RuleFor(x => x.DataVolta)
+                .NotEmpty()
+                .WithMessage("Preenchimento obrigatório")
+                .GreaterThan(x => x.DataVolta.AddDays(2))
+                .WithMessage(x => $"A data de volta deve ser maior do que { x.DataVolta.AddDays(2).ToString("dd/MM/yyyy")}");
+
+            RuleFor(x => x.QuantidadeViajantes)
+                .GreaterThanOrEqualTo(1)
+                .WithMessage("A quantidade de passageiros deve ser maior ou igual a 1");
+
+            RuleFor(x => x.ClienteId)
+                .NotEmpty()
+                .WithMessage("Informe os dados do cliente");
+        }
     }
 }

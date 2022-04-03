@@ -1,5 +1,5 @@
-﻿using Estudos.Viagem.Application.Repositories;
-using Estudos.Viagem.Application.Services.Messages;
+﻿using Estudos.Viagem.Domain.Repositories;
+using Estudos.Viagem.Messages.Services;
 
 namespace Estudos.Viagem.Application.UseCase.CriarViagem;
 
@@ -20,31 +20,30 @@ public class CriarViagem : ICriarViagemUseCase
     {
         var cliente = await _clienteRepository.GetById(request.ClienteId);
         if (cliente == null)
-            return OutputFalha("Cliente não encontrado");
+            return new CriarViagemOutput("Cliente não encontrado");
 
         var viagem = request.ToViagem();
+        var validacao = viagem.Validate();
+        if (!validacao.IsValid)
+            return new CriarViagemOutput("Dados inválidos", validacao.Errors);
+
         await _viagemRepository.Save(viagem);
 
-        if (request.HospedagemId != null && request.HospedagemId != Guid.Empty)
+        if (request.HospedagemId != null)
+        {
+            viagem.SetReservarHotel();
+            await _viagemRepository.Update(viagem);
+        }
+
+        if (request.CarroId != null)
+        {
+            viagem.SetAlugarCarro();
+            await _viagemRepository.Update(viagem);
+        }
+
+        if (request.HospedagemId != null || request.CarroId != null)
             await _eventService.PublishAsync(request.ToEvent(viagem.Id));
 
-        //TODO: Tratar quando houver o serviço de carro
-        //if (request.CarroId != null)
-        //await _eventService.PublishAsync(request.ToEvent());
-        return OutputSucesso();
-    }
-
-    private CriarViagemOutput OutputSucesso()
-    {
-        var output = new CriarViagemOutput();
-        output.AddMessage("Viagem criada com sucesso");
-        return output;
-    }
-
-    private CriarViagemOutput OutputFalha(string msgErro)
-    {
-        var output = new CriarViagemOutput();
-        output.AddErro(msgErro);
-        return output;
+        return new CriarViagemOutput();
     }
 }

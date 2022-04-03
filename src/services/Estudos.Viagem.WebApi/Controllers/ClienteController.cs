@@ -1,4 +1,4 @@
-﻿using Estudos.Viagem.Application.Repositories;
+﻿using Estudos.Viagem.Application.UseCase.ObterClientes;
 using Estudos.Viagem.WebApi.Extensions;
 using Estudos.Viagem.WebApi.Requests;
 using MediatR;
@@ -11,25 +11,28 @@ namespace Estudos.Viagem.WebApi.Controllers
     public class ClienteController : ControllerBaseCustom
     {
         private readonly IMediator _mediator;
-        private readonly IClienteRepository _clienteRepository;
 
-        public ClienteController(IMediator mediator, IClienteRepository clienteRepository)
+        public ClienteController(IMediator mediator)
         {
             _mediator = mediator;
-            _clienteRepository = clienteRepository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        [Produces(typeof(ObterClientesOutput))]
+        public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
-            return Ok(await _clienteRepository.GetAll());
+            var output = await _mediator.Send(new ObterClientesInput(), cancellationToken);
+            if (output.Success)
+                return Ok(output);
+
+            return BadRequest(output);
         }
 
         [HttpPost]
         public async Task<IActionResult> PostAsync(CadastrarClienteRequest request, CancellationToken cancellationToken)
         {
             var output = await _mediator.Send(request.ToInput(), cancellationToken);
-            if (output.Sucesso)
+            if (output.Success)
                 return Ok(output);
 
             return BadRequest(output);

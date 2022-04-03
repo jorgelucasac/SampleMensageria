@@ -1,5 +1,5 @@
-﻿using Estudos.Viagem.Application.Entities;
-using Estudos.Viagem.Application.Repositories;
+﻿using Estudos.Viagem.Domain.Entities;
+using Estudos.Viagem.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Estudos.Viagem.Infrastructure.SqlServer.Repositories

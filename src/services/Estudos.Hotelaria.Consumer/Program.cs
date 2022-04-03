@@ -1,5 +1,6 @@
 ﻿using Estudos.Hotelaria.Consumer.Extensions;
 using Estudos.Hotelaria.Infrastructure.MongoDb;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -31,6 +32,7 @@ public class Program
             {
                 services.AddRabbitMq(hostContext.Configuration);
                 services.UseMongoDb(hostContext.Configuration);
+                services.AddMediatR(typeof(Program).Assembly);
             });
     }
 }

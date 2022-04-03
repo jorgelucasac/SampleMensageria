@@ -1,6 +1,6 @@
-﻿using Estudos.Viagem.Application.Services.Messages;
-using Estudos.Viagem.Application.Consumers;
+﻿using Estudos.Viagem.Application.Consumers;
 using Estudos.Viagem.Infrastructure.RabbitMq.Services;
+using Estudos.Viagem.Messages.Services;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

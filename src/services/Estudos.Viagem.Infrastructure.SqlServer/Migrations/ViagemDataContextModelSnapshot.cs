@@ -22,32 +22,7 @@ namespace Estudos.Viagem.Infrastructure.SqlServer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Estudos.Viagem.Application.Entities.Carro", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CarroId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Categoria")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Modelo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("PrecoDiaria")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Carros");
-                });
-
-            modelBuilder.Entity("Estudos.Viagem.Application.Entities.Cliente", b =>
+            modelBuilder.Entity("Estudos.Viagem.Domain.Entities.Cliente", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,9 +31,6 @@ namespace Estudos.Viagem.Infrastructure.SqlServer.Migrations
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("DATE");
@@ -72,35 +44,14 @@ namespace Estudos.Viagem.Infrastructure.SqlServer.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("Estudos.Viagem.Application.Entities.Hospedagem", b =>
+            modelBuilder.Entity("Estudos.Viagem.Domain.Entities.PacoteViagem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("HotelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("NomeHotel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("PrecoDiaria")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Hospedagens");
-                });
-
-            modelBuilder.Entity("Estudos.Viagem.Application.Entities.PacoteViagem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CarroId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("AlugarCarro")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("ClienteId")
                         .HasColumnType("uniqueidentifier");
@@ -111,11 +62,11 @@ namespace Estudos.Viagem.Infrastructure.SqlServer.Migrations
                     b.Property<DateTime>("DataUltimaAtualizacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("HospedagemId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("MensagensValidacoes")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ReservarHotel")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -130,15 +81,72 @@ namespace Estudos.Viagem.Infrastructure.SqlServer.Migrations
                     b.ToTable("Viagens");
                 });
 
-            modelBuilder.Entity("Estudos.Viagem.Application.Entities.PacoteViagem", b =>
+            modelBuilder.Entity("Estudos.Viagem.Domain.Entities.PacoteViagem", b =>
                 {
-                    b.HasOne("Estudos.Viagem.Application.Entities.Cliente", "Cliente")
+                    b.HasOne("Estudos.Viagem.Domain.Entities.Cliente", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Estudos.Viagem.Application.ValueObjects.Passagem", "Passagem", b1 =>
+                    b.OwnsOne("Estudos.Viagem.Domain.ValueObjects.Carro", "Carro", b1 =>
+                        {
+                            b1.Property<Guid>("PacoteViagemId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("CarroId")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("CarroId");
+
+                            b1.Property<string>("Categoria")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("CategoriaCarro");
+
+                            b1.Property<string>("Modelo")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("ModeloCarro");
+
+                            b1.Property<decimal>("ValorDiaria")
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("ValorDiariaCarro");
+
+                            b1.HasKey("PacoteViagemId");
+
+                            b1.ToTable("Viagens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PacoteViagemId");
+                        });
+
+                    b.OwnsOne("Estudos.Viagem.Domain.ValueObjects.Hospedagem", "Hospedagem", b1 =>
+                        {
+                            b1.Property<Guid>("PacoteViagemId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("HotelId")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("HotelId");
+
+                            b1.Property<string>("NomeHotel")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("NomeHotel");
+
+                            b1.Property<decimal>("ValorDiaria")
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("ValorDiariaHotel");
+
+                            b1.HasKey("PacoteViagemId");
+
+                            b1.ToTable("Viagens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PacoteViagemId");
+                        });
+
+                    b.OwnsOne("Estudos.Viagem.Domain.ValueObjects.Passagem", "Passagem", b1 =>
                         {
                             b1.Property<Guid>("PacoteViagemId")
                                 .HasColumnType("uniqueidentifier");
@@ -173,7 +181,11 @@ namespace Estudos.Viagem.Infrastructure.SqlServer.Migrations
                                 .HasForeignKey("PacoteViagemId");
                         });
 
+                    b.Navigation("Carro");
+
                     b.Navigation("Cliente");
+
+                    b.Navigation("Hospedagem");
 
                     b.Navigation("Passagem")
                         .IsRequired();

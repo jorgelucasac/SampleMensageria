@@ -1,8 +1,8 @@
-﻿using Estudos.Viagem.Application.Repositories;
+﻿using Estudos.Viagem.Domain.Repositories;
 
 namespace Estudos.Viagem.Application.UseCase.CadastrarCliente
 {
-    public class CadastrarCliente : ICadastrarClienteUseCase
+    public class CadastrarCliente : ICadastrarCliente
     {
         private readonly IClienteRepository _clienteRepository;
 
@@ -17,12 +17,12 @@ namespace Estudos.Viagem.Application.UseCase.CadastrarCliente
             try
             {
                 await _clienteRepository.Save(request.ToCliente());
-
-                output.AddMessage("Cliente cadastrado com sucesso");
+                output.Message = "Cliente cadastrado com sucesso";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                output.AddMessage("Falha ao cadastrar o cliente");
+                output.Message = "Falha ao cadastrar o cliente";
+                output.AddErro(ex.Message);
             }
             return output;
         }
